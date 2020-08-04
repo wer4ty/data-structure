@@ -10,3 +10,6 @@ class List {
 
 let tempList = new List();
 console.log(tempList);
+console.log(tempList);
+console.log(tempList);
+
