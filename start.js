@@ -27,7 +27,7 @@ function compareFiles(file) {
              
           }
           else {  
-            fs.writeFile('reload.txt', 'OK', () => { console.log("Reload");  }); 
+            fs.writeFile('reload.txt', 'OK', () => { /*console.log("Reload");*/  }); 
  
           }
         }
