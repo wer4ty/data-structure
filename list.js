@@ -56,6 +56,7 @@ t.insert('Good');
 
 
 
+
 for(t.front(); t.next();) console.log(`${t.currPos()} < ${t.length()} Values is: ${t.get()}`);
 
 

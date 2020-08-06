@@ -9,20 +9,21 @@ var fs = require('fs'); // file system
 var file;
 var serverStarted = false;
 
-var server = app.listen(9000, () => {
+var port = 9000;
+var fileToSpy = "stack.js";
+
+var server = app.listen(port, () => {
   console.log('Connection on')
 });
 
 
 
 const io = require('socket.io').listen(server)
-io.on('connection', (client) => {
-    console.log("Socket connection is ON!");
-});
+io.on('connection', (client) => {});
 
 
 function checkFile() {
-fs.stat("list.js", (error, stats) => {
+fs.stat(fileToSpy, (error, stats) => {
 	      if (!serverStarted) { 
 	      	  	mTime = stats.mtime;
 	      	  	serverStarted = true;
