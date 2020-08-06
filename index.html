@@ -55,6 +55,23 @@ function dynamicChange() {
 <script src="list.js"></script>
 
 
+<!-- Socket -->
 
+<!--
+<script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+<script>
+  var socket = io();
+</script>
+-->
+
+
+<script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+<script>
+  var socket = io('http://localhost:9000');
+ 
+  socket.on('update', (data) => {
+    (data.refresh) ? window.location.reload() : '';
+  });
+</script>
 </body>
 </html>
