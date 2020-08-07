@@ -10,7 +10,7 @@ var file;
 var serverStarted = false;
 
 var port = 9000;
-var fileToSpy = "hash-table.js";
+var fileToSpy = "set.js";
 
 var server = app.listen(port, () => {
   console.log('Connection on')
