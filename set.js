@@ -56,6 +56,57 @@ function Set() {
 
 }
 
+
+let inBetween = (s_in, s_out) => {
+    return (x) => { return x >= s_in && x <= s_out };  
+}
+
+let inArray = (arr_temp) => {
+    return (x) => { return arr_temp.includes(x); }
+}
+
+let arr = [1,2,3,4,5,6,7];
+let res = arr.filter(inBetween(3, 6));
+let res2 = arr.filter(inArray([1,2,10]));
+
+console.log(res);
+console.log(res2);
+
+let byField = (fieldName) => {
+    return (a,b) =>  {
+        return a[fieldName] > b[fieldName] ? 1 : -1
+    }
+}
+
+let users = [
+  { name: "John", age: 20, surname: "Johnson" },
+  { name: "Pete", age: 18, surname: "Peterson" },
+  { name: "Ann", age: 19, surname: "Hathaway" }
+];
+
+users.sort(byField('age'));
+console.log(users);
+console.log(arr.filter(inBetween(3,6)));
+
+
+
+function makeArmy() {
+  let shooters = [];
+  
+  for(let ik=0; ik < 10; ik++) {
+    let shooter = function() {  console.log(ik); };
+    shooters.push(shooter);
+  }
+
+  return shooters;
+}
+
+let army = makeArmy();
+console.log(army)
+army.forEach(x => x());
+
+
+
 // usage
 let names = new Set();
 names.add("David");
@@ -66,6 +117,10 @@ let names2 = new Set();
 names.add("David2");
 names.add("Jennifer2");
 names.add("Mike2");
-    (names.add("Mike")) ? console.log("Mike added") : console.log("Cannot add Mike") ;
+   // (names.add("Mike")) ? console.log("Mike added") : console.log("Cannot add Mike") ;
 names.union(names2);
-console.log(names.show())
+//console.log(names.show())
+
+
+
+
