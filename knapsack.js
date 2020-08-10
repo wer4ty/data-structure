@@ -13,6 +13,26 @@ knapsack = (capacity, items, n) => {
             );
 }
 
+knapsack_dynamic_programing = (capacity, items, n) => {
+    let K = new Array(capacity+1).fill([]);
+    
+    for(let i=0; i<=n; i++) {
+        for(let w =0; w<= capacity; w++) {
+            if (i == 0 || w == 0) { 
+                K[i][w] = 0; 
+            }
+            else if (items[i-1].size <= w) { 
+                K[i][w] = max(items[i-1].value + K[i-1][w-items[i-1].size], K[i-1][w]) 
+            }
+            else {
+                K[i][w] = K[i-1][w];
+            }
+        }
+        console.log(K[i]);
+    }
+    return K[n][capacity];
+}
+
 // usage 
 let items = [
     {value: 4, size: 3, name: "MotionController"},
@@ -27,3 +47,5 @@ let n =5;
 
 console.log(knapsack(capacity, items, n));
 console.log(items);
+
+console.warn(knapsack_dynamic_programing(capacity,items,n));
