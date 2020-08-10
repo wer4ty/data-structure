@@ -20,9 +20,10 @@ let items = [
     {value: 10, size: 7, name: "IcePen"},
     {value: 11, size: 8, name: "IronPaper"},
     {value: 13, size: 9, name: "QuarkWall"}
-]
+];
 
 let capacity = 16;
 let n =5;
 
 console.log(knapsack(capacity, items, n));
+console.log(items);
