@@ -123,4 +123,29 @@ names.union(names2);
 
 
 
+async function f() {
 
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("готово!"), 10000)
+  });
+
+  let result =  await promise; // будет ждать, пока промис не выполнится (*)
+
+  console.log(result); // "готово!"
+}
+
+f();
+
+
+function delay(ms) {
+    return  new Promise( (resolve, reject) => {
+        setTimeout(resolve, ms);
+    })
+}
+
+delay(3000).then( () => {
+     console.log('execute after 3 seconds')
+     return new Promise((resolve, reject) => { setTimeout(resolve, 1000) })
+     }).then( () => {
+          console.log('execute after 4 seconds')
+          })
