@@ -1,3 +1,7 @@
+timeMeasure = (startFunctionTime) => {
+   return  (Date.now() - startFunctionTime);
+}
+
 max = (a,b) => (a > b) ? a : b; 
 
 knapsack = (capacity, items, n) => {
@@ -28,9 +32,35 @@ knapsack_dynamic_programing = (capacity, items, n) => {
                 K[i][w] = K[i-1][w];
             }
         }
-        console.log(K[i]);
     }
     return K[n][capacity];
+}
+
+greedy_approach_knapsack = (capacity, items, n) => {
+    let temp = items.map( x =>  { 
+        return {value: x.value, size: x.size, ratio: parseFloat((x.value / x.size).toFixed(4)) }  
+    }).sort((a,b) => a.ratio > b.ratio ? 1 : -1 );
+
+  
+    if(n == 0 || capacity == 0) 
+        return 0;
+
+    let res = 0;
+    
+    for (let i = n; i--; i >=0) {
+        if(n == 0 || capacity == 0){
+            break;
+        }
+
+        if (capacity >= temp[i].size) {
+            res += temp[i].value;
+            capacity -= temp[i].size;
+            temp.splice(i, 1);
+            n--;
+        }
+    }
+    return res;
+
 }
 
 // usage 
@@ -45,7 +75,15 @@ let items = [
 let capacity = 16;
 let n =5;
 
-console.log(knapsack(capacity, items, n));
-console.log(items);
 
-console.warn(knapsack_dynamic_programing(capacity,items,n));
+startTime = Date.now();
+console.log(knapsack(capacity, items, n));
+console.log(`knapsack recursive: ${timeMeasure(startTime)} miliseconds`)
+
+startTime = Date.now();
+console.log(knapsack_dynamic_programing(capacity,items,n));
+console.log(`knapsack_dynamic_programing: ${timeMeasure(startTime)} miliseconds`)
+
+startTime = Date.now();
+console.log(greedy_approach_knapsack(capacity,items,n));
+console.log(`greedy_approach_knapsack: ${timeMeasure(startTime)} miliseconds`)
