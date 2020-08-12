@@ -1,23 +1,48 @@
 timeMeasure = (startFunctionTime) => (Date.now() - startFunctionTime);
 
-
 // longest common subsuquence
 lcs_brute_force = (str1, str2) => {
     for(let i=str1.length-1; i>0; i--) {
 
         for (let j=0; j <= str1.length - i; j++) {
         	let tmp_str = str1.substr(j, i);
-        	
             if (str2.includes(tmp_str)) {
                 return {i, str: tmp_str};
             }
-            
         }
     }
 
 }
 
-let start = Date.now(), 
+lcs_dynamic_programming = (word1, word2) => {
+	let index = 0,
+	max = 0,
+	arr = new Array(word1.length+1);
+
+	for(let k=0; k <= word1.length+1; ++k) arr[k] = (new Array(word2.length+1).fill(0))
+	    
+	for(let i=0; i<=word1.length; ++i) {
+		for(let j=0; j<=word2.length; ++j) {
+			if (i == 0 || j == 0) {
+				arr[i][j] = 0;
+			} else {
+				if (word1[i-1] == word2[j-1]) {
+					arr[i][j] = arr[i-1][j-1] + 1;    
+				} else {
+					arr[i][j] = 0;
+				}
+			}
+			if (max < arr[i][j]) {
+				max = arr[i][j];
+				index = i;
+			}
+		}
+	}
+	return {max, index};
+}
+
+
+let start = Date.now(),
 dna1 = `gggacgcagtgtgacttagtgatctcggacgggattttttttgatgtgtcgtgtggcgtt
 ggcgtgagtatctggatagttcagactgagcattatcgtatcacgttttagtcatcagca
 cgactaaaaacgggaatctgaatccagaaacgagacagctcacgtgctatttactagctg
@@ -353,5 +378,19 @@ gccggccgatttcaggatgtaggacggtggagtcaagtctaacttttgaccctgtaattc
 tagtttgagcgtgaattcgagcgccgagcaccatgctacgcacttcatgacacttaaata
 aaaagaccttcttcgtgttcgtagctgtggtttccgctgaccgccgatatgccgttgtcg
 tcaccctgccgagttacgatgatgtgcctaataatttgat`;
-console.log(lcs_brute_force(dna1, dna2));
+
+
+let tmp_dna1 = "agtgaaggggtgtcgatttgggacctgtaagcaatcgtagggggtacaatctacccatggattatgctatgagcgctcactgagaatcgaaaaaacggga", 
+tmp_dna2 = "taacagagagaaaagttcgttgttttggtttggactaaaaagcaaaatctttgcctatgctaccgtgcctatggtacggcagtctggccaggattagata";
+
+
+console.log(lcs_brute_force(tmp_dna1, tmp_dna2));
 console.log(`lcs bruteforse max to min: ${timeMeasure(start)} miliseconds`)
+
+start = Date.now();
+console.log(lcs_dynamic_programming(tmp_dna1, tmp_dna2));
+console.log(`lcs dynamic programming: ${timeMeasure(start)} miliseconds`);
+
+
+
+
