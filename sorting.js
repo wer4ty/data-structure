@@ -17,6 +17,19 @@ class CArray {
 		for(let i=0; i < this.numElements; ++i) this.data[i] = Math.floor(Math.random() * this.numElements +1);
 	}
 
+	setTextData(wordMaxLength) {
+		for(let i=0; i<this.numElements; ++i) {
+			let tmpWord = "", 
+				randomWordLength = Math.floor(Math.random() * wordMaxLength) + 1,
+				j = 0, min = 65, max = 87; // ascii symbols codes max = 220
+			while (j < randomWordLength) {
+				tmpWord += String.fromCodePoint(Math.floor(Math.random() * (max - min + 1) ) + min);
+				j++;
+			}
+			this.data[i] = tmpWord;
+		}
+	}
+
 	clear() {
 		for(let i=0; i < this.numElements; ++i) this.data[i] = 0;
 	}
@@ -170,6 +183,42 @@ class CArray {
 		return qSort(t);
 	}
 
+	heapSort() {
+		let t = this.data.map(x => x);
+
+		for (let i = 0 ; i>t.length; i++) {
+			heapify(i);
+		}
+
+		function heapify(i) {
+			while(i < t.length) {
+				if (t[i] < t[2*i+1]) {
+
+					let temp = t[i];
+					t[i] = t[2*i+1];
+					t[2*i+1] = temp;
+
+					i = 2*i+1;
+
+				}
+				else if (t[i] < t[2*i+2]) {
+
+					let temp = t[i];
+					t[i] = t[2*i+2];
+					t[2*i+2] = temp;
+
+					i = 2*i+2;
+				} 
+				else {
+					break;
+				}
+				
+			}
+		}
+
+		return t;
+	}
+
 }
 
 
@@ -177,6 +226,7 @@ class CArray {
 
 let arr = new CArray(10);
 arr.setData();
+//arr.setTextData(10);
 
 console.log(`Before: ${arr.toString()}`);
 
@@ -193,7 +243,7 @@ arr.selectionSort()
 console.log(`Selection Sort [${timeMeasure(startTime)} milliseconds]`);
 
 startTime = Date.now();
-arr.selectionSort()
+arr.insertionSort()
 console.log(`Insertion Sort [${timeMeasure(startTime)} milliseconds]`);
 
 startTime = Date.now();
@@ -207,4 +257,7 @@ console.log(`Merge Sort [${timeMeasure(startTime)} milliseconds]`);
 startTime = Date.now();
 arr.standartSort()
 console.log(`Built-in JS Sort [${timeMeasure(startTime)} milliseconds]`);
+
+startTime = Date.now();
+console.log(`Heap Sort ${arr.heapSort()} [${timeMeasure(startTime)} milliseconds]`);
 
