@@ -185,35 +185,39 @@ class CArray {
 
 	heapSort() {
 		let t = this.data.map(x => x);
+		let heap = [];
 
-		for (let i = 0 ; i>t.length; i++) {
-			heapify(i);
+		// help function
+		function built() {
+			t.forEach((item,i) => {
+				heap.push(item);
+				heapify(i);
+			});
 		}
 
 		function heapify(i) {
-			while(i < t.length) {
-				if (t[i] < t[2*i+1]) {
+			if (i == 0) return;
+			let parent = Math.floor((i-1)/2);
 
-					let temp = t[i];
-					t[i] = t[2*i+1];
-					t[2*i+1] = temp;
 
-					i = 2*i+1;
-
-				}
-				else if (t[i] < t[2*i+2]) {
-
-					let temp = t[i];
-					t[i] = t[2*i+2];
-					t[2*i+2] = temp;
-
-					i = 2*i+2;
-				} 
-				else {
-					break;
-				}
-				
+			if (heap[i] > heap[parent]) {
+				let tmp = heap[i];
+				heap[i] = heap[parent];
+				heap[parent] = tmp;
+				heapify(parent);
 			}
+		}
+
+		// algorithm
+		built();
+		t = [];
+
+		let j =heap.length-1;
+		while(heap.length > 0) {
+			t.push(heap.shift());
+			
+			for(let i=0; i< heap.length; i++) 
+				heapify(i);
 		}
 
 		return t;
@@ -224,11 +228,12 @@ class CArray {
 
 // usage
 
-let arr = new CArray(10);
+let arr = new CArray(100);
 arr.setData();
 //arr.setTextData(10);
 
 console.log(`Before: ${arr.toString()}`);
+
 
 startTime = Date.now();
 arr.quickSort()
@@ -259,5 +264,5 @@ arr.standartSort()
 console.log(`Built-in JS Sort [${timeMeasure(startTime)} milliseconds]`);
 
 startTime = Date.now();
-console.log(`Heap Sort ${arr.heapSort()} [${timeMeasure(startTime)} milliseconds]`);
+console.log(`Heap Sort [${timeMeasure(startTime)} milliseconds]`);
 
